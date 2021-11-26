@@ -18,3 +18,12 @@ To run bash scripts on linux you need an extra tool called Cygwin
 2. Type in `cd (path to the folder)`
 3. Type in `curl https://raw.githubusercontent.com/JZsam/del.sh/main/del.sh > del.sh && chmod +x del.sh`
 4. To run it you type `./del.sh`
+## Options
+By using the -h flag like this `./del.sh -h` this will give all of the options and prints this.
+`del.sh [-h|v|l] mod
+options:
+h		Print this help statment
+v		Prints the version
+l		Changes the standard (take the lager side like 2/3 or 3/4) to take 1/3 or 1/4`
+
+running the program like this `./del.sh 3` will give you 2/3 of the total images. While if you do `./del.sh -l 3` it will give you 1/3 of the images
