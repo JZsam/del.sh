@@ -5,11 +5,12 @@ set -euo pipefail
 ####################
 Help(){
 	echo
-	echo "del.sh [-h|v|l] mod"
+	echo "del.sh [-h|v|l|p] mod"
 	echo "options:"
 	echo "h		Print this help statment"
 	echo "v		Prints the version"
 	echo "l		Changes the standard (take the larger side like 2/3 or 3/4) to take 1/3 or 1/4"
+	echo "p		Lets you pass in a specific path"
 }
 ####################
 # SETTING VARIABLES#
@@ -32,10 +33,11 @@ while getopts ":hvlp" option; do
 		l)
 			Lower=true;;
 		p)
-			path=$OPTARG
+			Path=$2
 			PathChange=true;;
 		\?)
 			echo "Error: Invalid option"
+			echo "Try using the -h flag for some help"
 			jexit;;
 	esac
 done
@@ -45,7 +47,9 @@ done
 # echo $Lower
 # echo $1
 # echo $2
-if [ $PathChange ]; then
+echo $Path
+# FIXME it is trying to go through the first part even when I use the flag
+if [ $PathChange == true ]; then
 	list=$( ls | sed 's/.jpg//g' | sed '/del.sh/d' | xargs)
 	echo $list
 	mkdir "$(pwd)_del/"
@@ -77,7 +81,7 @@ else
 	mkdir "$(pwd)_del/"
 	if [ $Lower == false ]; then
 		for current in $list; do
-			new=$(($current%$1))
+			new=$(($current%$3))
 			if [ $new != 0 ] ; then
 				mv "$current.jpg" "$(pwd)_del/"
 				echo "Move;next"
@@ -87,7 +91,7 @@ else
 		done
 	elif [ $Lower == true ];  then
 		for current in $list; do
-			new=$(($current%$2))
+			new=$(($current%$4))
 			if [ $new = 0 ] ; then
 				mv "$current.jpg" "$(pwd)_del/"
 				echo "Move;next"
