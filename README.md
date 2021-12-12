@@ -3,7 +3,7 @@
 del.sh is a bash script I wrote that will take all of the images from a directory that you get from Daniel King’s Frame Extraction Tool and move all of the odd number files to a delete folder
 ## To install/run this script
 ### Windows
-To run bash scripts on linux you need an extra tool called Cygwin
+To run bash scripts on Windows you need an extra tool called Cygwin
 #### The Cygwin Installation
 1. On your browser go to [The Cygwin Website https://www.cygwin.com/](https://www.cygwin.com/)
 2. Go down to the section called "Installing Cygwin" and click on the "setup-x86_64.exe"
