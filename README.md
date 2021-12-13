@@ -20,10 +20,11 @@ To run bash scripts on Windows you need an extra tool called Cygwin
 4. To run it you type `./del.sh`
 ## Options
 By using the -h flag like this `./del.sh -h` this will give all of the options and prints this.
-`del.sh [-h|v|l] mod
+`del.sh [-h|v|l|p] mod
 options:
 h		Print this help statment
 v		Prints the version
 l		Changes the standard (take the lager side like 2/3 or 3/4) to take 1/3 or 1/4`
+p		Lets you pass in a specific path
 
-running the program like this `./del.sh 3` will give you 2/3 of the total images. While if you do `./del.sh -l 3` it will give you 1/3 of the images
+running the program like this `./del.sh 3` will give you 2/3 of the total images. While if you do `./del.sh -l 3` it will give you 1/3 of the images. With the new flag `-p` you just input a path like this `./del.sh -p vid4/ 3` the `3` works the same way the `vid4/` will run the script inside this directory.
