@@ -27,8 +27,7 @@ while getopts ":hvlp" option; do
 			Help
 			exit;;
 		v)
-			# echo beta 0.1.0
-			echo alpha 0.1.1
+			echo beta 0.1.1
 			exit;;
 		l)
 			Lower=true;;
@@ -48,8 +47,7 @@ done
 # echo $1
 # echo $2
 echo $Path
-# FIXME it is trying to go through the first part even when I use the flag
-if [ $PathChange == true ]; then
+if [ $PathChange == false ]; then
 	list=$( ls | sed 's/.jpg//g' | sed '/del.sh/d' | xargs)
 	echo $list
 	mkdir "$(pwd)_del/"
@@ -91,7 +89,7 @@ else
 		done
 	elif [ $Lower == true ];  then
 		for current in $list; do
-			new=$(($current%$4))
+			new=$(($current%$3))
 			if [ $new = 0 ] ; then
 				mv "$current.jpg" "$(pwd)_del/"
 				echo "Move;next"
