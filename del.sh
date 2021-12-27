@@ -18,26 +18,29 @@ Help(){
 Lower=false
 Path=$(pwd)
 PathChange=false
+Remove=false
 ####################
 # OPTIONS          #
 ####################
-while getopts ":hvlp" option; do
+while getopts ":hvlpr" option; do
 	case $option in
 		h) # display Help
 			Help
 			exit;;
 		v)
-			echo beta 0.1.1
+			echo alpha
 			exit;;
 		l)
 			Lower=true;;
 		p)
 			Path=$2
 			PathChange=true;;
+		r)
+			Remove=true;;
 		\?)
 			echo "Error: Invalid option"
 			echo "Try using the -h flag for some help"
-			jexit;;
+			exit;;
 	esac
 done
 ####################
@@ -47,56 +50,117 @@ done
 # echo $1
 # echo $2
 echo $Path
-if [ $PathChange == false ]; then
-	list=$( ls | sed 's/.jpg//g' | sed '/del.sh/d' | xargs)
-	echo $list
-	mkdir "$(pwd)_del/"
-	if [ $Lower == false ]; then
-		for current in $list; do
-			new=$(($current%$1))
-			if [ $new != 0 ] ; then
-				mv "$current.jpg" "$(pwd)_del/"
-				echo "Move;next"
-			else
-				echo "Stay; next"
-			fi
-		done
-	elif [ $Lower == true ];  then
-		for current in $list; do
-			new=$(($current%$2))
-			if [ $new = 0 ] ; then
-				mv "$current.jpg" "$(pwd)_del/"
-				echo "Move;next"
-			else
-				echo "Stay; next"
-			fi
-		done
+if [ $Remove == false ]; then
+	if [ $PathChange == false ]; then
+		list=$( ls | sed 's/.jpg//g' | sed '/del.sh/d' | xargs)
+		echo $list
+		mkdir "$(pwd)_del/"
+		if [ $Lower == false ]; then
+			for current in $list; do
+				new=$(($current%$1))
+				if [ $new != 0 ] ; then
+					mv "$current.jpg" "$(pwd)_del/"
+					echo "Move;next"
+				else
+					echo "Stay; next"
+				fi
+			done
+		elif [ $Lower == true ];  then
+			for current in $list; do
+				new=$(($current%$2))
+				if [ $new = 0 ] ; then
+					mv "$current.jpg" "$(pwd)_del/"
+					echo "Move;next"
+				else
+					echo "Stay; next"
+				fi
+			done
+		fi
+	else
+		cd $Path
+		list=$( ls | sed 's/.jpg//g' | sed '/del.sh/d' | xargs)
+		echo $list
+		mkdir "$(pwd)_del/"
+		if [ $Lower == false ]; then
+			for current in $list; do
+				new=$(($current%$3))
+				if [ $new != 0 ] ; then
+					mv "$current.jpg" "$(pwd)_del/"
+					echo "Move;next"
+				else
+					echo "Stay; next"
+				fi
+			done
+		elif [ $Lower == true ];  then
+			for current in $list; do
+				new=$(($current%$3))
+				if [ $new = 0 ] ; then
+					mv "$current.jpg" "$(pwd)_del/"
+					echo "Move;next"
+				else
+					echo "Stay; next"
+				fi
+			done
+		fi
+		cd -
 	fi
 else
-	cd $Path
-	list=$( ls | sed 's/.jpg//g' | sed '/del.sh/d' | xargs)
-	echo $list
-	mkdir "$(pwd)_del/"
-	if [ $Lower == false ]; then
-		for current in $list; do
-			new=$(($current%$3))
-			if [ $new != 0 ] ; then
-				mv "$current.jpg" "$(pwd)_del/"
-				echo "Move;next"
-			else
-				echo "Stay; next"
-			fi
-		done
-	elif [ $Lower == true ];  then
-		for current in $list; do
-			new=$(($current%$3))
-			if [ $new = 0 ] ; then
-				mv "$current.jpg" "$(pwd)_del/"
-				echo "Move;next"
-			else
-				echo "Stay; next"
-			fi
-		done
+	echo remove
+	if [ $PathChange == false ]; then
+		list=$( ls | sed 's/.jpg//g' | sed '/del.sh/d' | xargs)
+		echo $list
+		# mkdir "$(pwd)_del/"
+		if [ $Lower == false ]; then
+			for current in $list; do
+				new=$(($current%$1))
+				if [ $new != 0 ] ; then
+					# mv "$current.jpg" "$(pwd)_del/"
+					rm $current.jpg
+					echo "Removed;next"
+				else
+					echo "Stay; next"
+				fi
+			done
+		elif [ $Lower == true ];  then
+			for current in $list; do
+				new=$(($current%$2))
+				if [ $new = 0 ] ; then
+					# mv "$current.jpg" "$(pwd)_del/"
+					rm $current.jpg
+					echo "Removed;next"
+				else
+					echo "Stay; next"
+				fi
+			done
+		fi
+	else
+		cd $Path
+		list=$( ls | sed 's/.jpg//g' | sed '/del.sh/d' | xargs)
+		echo $list
+		mkdir "$(pwd)_del/"
+		if [ $Lower == false ]; then
+			for current in $list; do
+				new=$(($current%$3))
+				if [ $new != 0 ] ; then
+					# mv "$current.jpg" "$(pwd)_del/"
+					rm $current.jpg
+					echo "Move;next"
+				else
+					echo "Stay; next"
+				fi
+			done
+		elif [ $Lower == true ];  then
+			for current in $list; do
+				new=$(($current%$3))
+				if [ $new = 0 ] ; then
+					# mv "$current.jpg" "$(pwd)_del/"
+					rm $current.jpg
+					echo "Move;next"
+				else
+					echo "Stay; next"
+				fi
+			done
+		fi
+		cd -
 	fi
-	cd -
 fi
